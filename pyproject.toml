@@ -27,7 +27,6 @@ classifiers = [
 dev = [
   "pytest>=8",
   "build>=1.2",
-  "cibuildwheel>=3.4,<4",
 ]
 
 [tool.setuptools]
