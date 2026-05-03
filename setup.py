@@ -2,7 +2,6 @@ from pathlib import Path
 
 from setuptools import Extension, setup
 
-
 ROOT = Path(__file__).parent
 HEAPX_ROOT = ROOT / "extern" / "heapx"
 

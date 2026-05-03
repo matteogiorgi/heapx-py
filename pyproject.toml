@@ -27,6 +27,7 @@ classifiers = [
 dev = [
   "pytest>=8",
   "build>=1.2",
+  "cibuildwheel>=3.4,<4",
 ]
 
 [tool.setuptools]
@@ -37,3 +38,22 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.cibuildwheel]
+build = "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*"
+skip = [
+  "*-musllinux_*",
+  "pp*",
+]
+test-requires = "pytest>=8"
+test-command = "python -m pytest {project}/tests"
+build-verbosity = 1
+
+[tool.cibuildwheel.linux]
+archs = ["x86_64", "aarch64"]
+
+[tool.cibuildwheel.macos]
+archs = ["auto"]
+
+[tool.cibuildwheel.windows]
+archs = ["AMD64"]

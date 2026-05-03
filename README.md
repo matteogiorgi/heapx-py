@@ -56,6 +56,31 @@ Build source and wheel distributions:
 python -m build
 ```
 
+The wheel produced locally is specific to the current Python version, operating
+system, and CPU architecture. Use the `Wheels` GitHub Actions workflow to build
+binary wheels for multiple platforms.
+
+## Binary wheels
+
+Binary wheels are built with
+[`cibuildwheel`](https://github.com/pypa/cibuildwheel). The workflow in
+`.github/workflows/wheels.yml` currently targets:
+
+- Linux x86_64 and aarch64
+- macOS x86_64 and arm64
+- Windows x64
+- CPython 3.9 through 3.14
+
+Run the workflow manually from the GitHub Actions tab, or create and push a
+version tag:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The built wheels and source distribution are uploaded as workflow artifacts.
+
 ## Submodule workflow
 
 `extern/heapx` is a git submodule. The main `heapx-py` repository stores only

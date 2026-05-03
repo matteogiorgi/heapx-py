@@ -15,13 +15,13 @@ typedef struct {
 
 struct HeapObject {
     PyObject_HEAD
-    struct heapx_heap *heap;
+        struct heapx_heap *heap;
     PyObject *key_func;
 };
 
 struct HandleObject {
     PyObject_HEAD
-    HeapObject *heap_owner;
+        HeapObject *heap_owner;
     HeapEntry *entry;
     struct heapx_handle handle;
     int live;
@@ -103,11 +103,12 @@ parse_implementation(PyObject *value, enum heapx_implementation *out)
             implementation == HEAPX_BINARY_HEAP ||
             implementation == HEAPX_FIBONACCI_HEAP ||
             implementation == HEAPX_KAPLAN_HEAP
-        ) {
+            ) {
             *out = (enum heapx_implementation)implementation;
             return 0;
         }
-    } else if (PyUnicode_Check(value)) {
+    }
+    else if (PyUnicode_Check(value)) {
         name = PyUnicode_AsUTF8(value);
         if (name == NULL)
             return -1;
@@ -179,19 +180,19 @@ Heap_len(PyObject *object)
 static int
 Heap_init(HeapObject *self, PyObject *args, PyObject *kwargs)
 {
-    static char *kwlist[] = {"implementation", "key", NULL};
+    static char *kwlist[] = { "implementation", "key", NULL };
     PyObject *implementation_arg = NULL;
     PyObject *key_func = Py_None;
     enum heapx_implementation implementation;
 
     if (!PyArg_ParseTupleAndKeywords(
-            args,
-            kwargs,
-            "|OO:Heap",
-            kwlist,
-            &implementation_arg,
-            &key_func
-        ))
+        args,
+        kwargs,
+        "|OO:Heap",
+        kwlist,
+        &implementation_arg,
+        &key_func
+    ))
         return -1;
 
     if (self->heap != NULL) {

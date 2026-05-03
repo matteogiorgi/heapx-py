@@ -9,7 +9,9 @@ class Item:
         self.value = value
 
 
-@pytest.mark.parametrize("implementation", ["binary", "fibonacci", "kaplan", BINARY, FIBONACCI, KAPLAN])
+@pytest.mark.parametrize(
+    "implementation", ["binary", "fibonacci", "kaplan", BINARY, FIBONACCI, KAPLAN]
+)
 def test_push_pop_orders_items(implementation):
     heap = Heap(implementation, key=lambda item: item.priority)
     items = [Item(5, "e"), Item(1, "a"), Item(3, "c")]
