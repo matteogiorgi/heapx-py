@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 
 from setuptools import Extension, setup
@@ -12,6 +13,18 @@ heapx_sources = [
     "extern/heapx/src/heaps/kaplan_heap.c",
 ]
 
+if sys.platform == "win32":
+    extra_compile_args = [
+        "/std:c11",
+    ]
+else:
+    extra_compile_args = [
+        "-std=c99",
+        "-Wall",
+        "-Wextra",
+        "-pedantic",
+    ]
+
 extension = Extension(
     "heapx._heapx",
     sources=[
@@ -22,8 +35,7 @@ extension = Extension(
         str(HEAPX_ROOT / "include"),
         str(HEAPX_ROOT / "src"),
     ],
-    extra_compile_args=["-std=c99", "-Wall", "-Wextra", "-pedantic"],
+    extra_compile_args=extra_compile_args,
 )
-
 
 setup(ext_modules=[extension])
