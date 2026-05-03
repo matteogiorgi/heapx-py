@@ -6,6 +6,9 @@ on:
     tags:
       - "v*"
 
+permissions:
+  contents: write
+
 jobs:
   build-wheels:
     name: Build wheels on ${{ matrix.os }}
@@ -60,3 +63,30 @@ jobs:
         with:
           name: sdist
           path: dist/*.tar.gz
+
+  publish-release:
+    name: Publish GitHub Release
+    needs:
+      - build-wheels
+      - build-sdist
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-dist
+          merge-multiple: true
+
+      - name: Create release and upload distributions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1 || \
+            gh release create "${GITHUB_REF_NAME}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --title "${GITHUB_REF_NAME}" \
+              --notes "Binary wheels and source distribution for ${GITHUB_REF_NAME}."
+          gh release upload "${GITHUB_REF_NAME}" release-dist/* \
+            --repo "${GITHUB_REPOSITORY}" \
+            --clobber

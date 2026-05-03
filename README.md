@@ -79,7 +79,15 @@ git tag v0.1.0
 git push origin v0.1.0
 ```
 
-The built wheels and source distribution are uploaded as workflow artifacts.
+Manual workflow runs upload the built wheels and source distribution as workflow
+artifacts. Tag builds also create a GitHub Release and attach all generated
+`.whl` and `.tar.gz` files to it.
+
+Install a wheel from a GitHub Release:
+
+```bash
+python -m pip install https://github.com/matteogiorgi/heapx-py/releases/download/v0.1.0/<wheel-file-name>.whl
+```
 
 ## Submodule workflow
 
