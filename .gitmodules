@@ -1,0 +1,3 @@
+[submodule "extern/heapx"]
+	path = extern/heapx
+	url = https://github.com/matteogiorgi/heapx
